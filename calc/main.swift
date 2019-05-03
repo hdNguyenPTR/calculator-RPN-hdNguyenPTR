@@ -11,4 +11,33 @@ import Foundation
 var args = ProcessInfo.processInfo.arguments
 args.removeFirst() // remove the name of the program
 
-print(Int(args[0])!)
+// declare values
+let calculator = ReversePolishNotationCalculator()
+var testInput: [String]
+
+// run error checks
+do
+{
+    try testInput = checkError(input: args)
+    print(calculator.calculate(arg: testInput))
+}
+// catch invalid input errors
+catch CalculatorErrors.invalidValues
+{
+    print("Invalid Input")
+    exit(1)
+}
+// catch no operators errors
+catch CalculatorErrors.noOperators
+{
+    print("No Operators")
+    exit(2)
+}
+// catch other errors
+catch let error
+{
+    print("Unspecified Error: \(error)")
+    exit(3)
+}
+
+
